@@ -5,7 +5,7 @@ import {
     FlatList
 } from 'react-native'
 import { UserContext } from '../screens/ParentComponent'
-import { CartItem } from '../components/CartItem'
+import Book from '../components/Book'
 
 const CheckoutScreen = () => {
     const data = useContext(UserContext);
@@ -14,9 +14,12 @@ const CheckoutScreen = () => {
 
     const renderItem = ({ item }) => {
         return (
-            <CartItem
+            <Book
                 bookData={item}
-            />
+                isShowBuyButton={false}
+                isCartView={true}
+                imageStyle={styles.image}
+                />
         )
     }
     return (
@@ -34,7 +37,12 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         flex:1
-    }
+    },
+    image: {
+        width: 110,
+        height: 110,
+        marginRight: 8
+    },
 })
 
 export default CheckoutScreen;

@@ -11,10 +11,10 @@ import {
 import { Rating } from 'react-native-ratings';
 import { Button } from './Button';
 
-const Book = (props) => {
-    const { bookData } = props;
+const Book = ({isShowBuyButton = true,isCartView = false, ...props }) => {
+    const { bookData, imageStyle } = props;
     const width = ((Dimensions.get('window').width / 2) - 10);
-    const conditionalStyle = createStyles(width);
+    const conditionalStyle = createStyles(width, isCartView);
     const [loading, setLoading] = useState(true);
 
     const onBuyNowPress = () => {
@@ -38,7 +38,7 @@ const Book = (props) => {
         >
             <View>
                 <Image
-                    style={conditionalStyle.image}
+                    style={[conditionalStyle.image, imageStyle]}
                     source={{ uri: bookData.thumbnailUrl }}
                     onLoadEnd={onLoadEnd}
                 />
@@ -47,30 +47,34 @@ const Book = (props) => {
                     animating={loading}
                 />
             </View>
-            <Text 
-                style={[conditionalStyle.marginHorizontal, conditionalStyle.title]}
-            >
-                {bookData.title}
-            </Text>
-            <View style={conditionalStyle.ratingContainer}>
-                <Rating showRating={false} imageSize={20} ratingCount={5} startingValue={bookData.rating} />
+            <View>
+                <Text
+                    style={[conditionalStyle.marginHorizontal, conditionalStyle.title]}
+                >
+                    {bookData.title}
+                </Text>
+                <View style={conditionalStyle.ratingContainer}>
+                    <Rating showRating={false} imageSize={20} ratingCount={5} startingValue={bookData.rating} />
+                </View>
+                <Text
+                    style={conditionalStyle.price}
+                >
+                    {'Rs ' + bookData.price}
+                </Text>
+                {isShowBuyButton &&
+                    <Button
+                        title='Buy Now'
+                        onPress={onBuyNowPress}
+                    />
+                }
             </View>
-            <Text
-                style={conditionalStyle.price}
-            >
-                {'Rs ' + bookData.price}
-            </Text>
-            <Button
-                title='Buy Now'
-                onPress={onBuyNowPress}
-            />
         </TouchableOpacity>
     )
 }
 
 export default Book;
 
-const createStyles = (width) => {
+const createStyles = (width, isCartView) => {
 
     return (
         StyleSheet.create({
@@ -78,6 +82,7 @@ const createStyles = (width) => {
                 marginTop: 8,
                 marginLeft: 8,
                 width: width,
+                flexDirection: isCartView ? 'row' : 'column'
             },
             marginHorizontal: {
                 marginTop: 8,
@@ -104,7 +109,7 @@ const createStyles = (width) => {
                 right: 0,
                 top: 0,
                 bottom: 0,
-              }
+            }
         })
     )
 }

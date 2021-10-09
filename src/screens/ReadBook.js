@@ -10,7 +10,7 @@ import { UserContext } from '../screens/ParentComponent'
 import { useNavigation } from '@react-navigation/native';
 
 const ReadBook = () => {
-    const [selectedBook, setSelectedBook] = useState('');
+    const [selectedBook, setSelectedBook] = useState();
     const data = useContext(UserContext);
     const books = data.data.books
     const route = useRoute();
@@ -25,11 +25,15 @@ const ReadBook = () => {
         setSelectedBook(book[0]);
     },[])
 
-    return(
-        <ScrollView>
-            <Text style={styles.text}>{selectedBook.longDescription}</Text>
-        </ScrollView>
-    )
+    if (!selectedBook) {
+        return null;
+    }else {
+        return(
+            <ScrollView>
+                <Text style={styles.text}>{selectedBook.longDescription}</Text>
+            </ScrollView>
+        )
+    }
 }
 
 export default ReadBook;
