@@ -3,7 +3,6 @@ import {
     View,
     FlatList,
     StyleSheet,
-    Dimensions
 }from 'react-native'
 import { UserContext } from '../screens/ParentComponent'
 import { CheckoutModal } from '../components/CheckoutModal'
@@ -60,15 +59,6 @@ const BooksListScreen = () => {
       setShowCheckoutModal(false);
       navigation.navigate(RouteNames.checkout)
     }
-    const width = ((Dimensions.get('window').width / 2) - 10);
-    const getItemLayout = (data, index) => {
-      return {
-        length: width, 
-        index, 
-        offset: width * index
-      }
-    }
-
     const books = data.data.books;
     return(
         <View style={styles.container}>
@@ -77,7 +67,6 @@ const BooksListScreen = () => {
                 numColumns={2}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.isbn}
-                getItemLayout={getItemLayout}
             />
             <CheckoutModal 
               isShowModal={showCheckoutModal}

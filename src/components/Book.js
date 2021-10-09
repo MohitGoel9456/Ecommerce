@@ -47,7 +47,9 @@ const Book = (props) => {
                     animating={loading}
                 />
             </View>
-            <Text style={[conditionalStyle.marginHorizontal, conditionalStyle.title]}>
+            <Text 
+                style={[conditionalStyle.marginHorizontal, conditionalStyle.title]}
+            >
                 {bookData.title}
             </Text>
             <View style={conditionalStyle.ratingContainer}>
